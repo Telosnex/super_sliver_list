@@ -29,6 +29,7 @@ class SuperSliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement
 
   @override
   void onMarkNeedsLayout() {
+    print('[SuperSliverMultiBoxAdaptorElement.onMarkNeedsLayout]');
     renderObject.markNeedsLayout();
   }
 
@@ -59,6 +60,8 @@ class SuperSliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement
     final childCountBefore = childCount;
     super.update(newWidget);
     if (childCountBefore != childCount) {
+      print(
+          '[SuperSliverMultiBoxAdaptorElement.update] childCount changed, mark needs layout');
       renderObject.markNeedsLayout();
     }
     if (_currentController != newWidget.listController) {
@@ -79,6 +82,9 @@ class SuperSliverMultiBoxAdaptorElement extends SliverMultiBoxAdaptorElement
   double measureExtentForItem(int index, SliverConstraints constraints) {
     _createTemporaryChild(index);
     final renderObject = _tempRenderObject! as RenderBox;
+    print(
+        '[SuperSliverMultiBoxAdaptorElement.measureExtentForItem] constraints: $constraints');
+
     renderObject.layout(constraints.asBoxConstraints(), parentUsesSize: true);
     final extent = constraints.axis == Axis.vertical
         ? renderObject.size.height
