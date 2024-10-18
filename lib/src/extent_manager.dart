@@ -85,6 +85,7 @@ class ExtentManager with ChangeNotifier {
   bool _didReportUnobstructedVisibleChildren = false;
 
   void performLayout(VoidCallback layout) {
+    print("[ExtentManager.performLayout]");
     assert(!_layoutInProgress);
     _layoutInProgress = true;
     _isModified = false;
@@ -95,6 +96,8 @@ class ExtentManager with ChangeNotifier {
 
     try {
       layout();
+    } catch (e) {
+      print("[ExtentManager.performLayout] error: $e");
     } finally {
       assert(_layoutInProgress);
       // Not reporting children means there are no visible children - set the
@@ -105,9 +108,13 @@ class ExtentManager with ChangeNotifier {
       if (!_didReportUnobstructedVisibleChildren) {
         reportUnobstructedVisibleChildren(null);
       }
+  
       _layoutInProgress = false;
       if (_isModified) {
+        print("[ExtentManager.performLayout] completed layout calling notifyListeners");
         notifyListeners();
+      } else {
+        print("[ExtentManager.performLayout] completed layout not calling notifyListeners");
       }
     }
   }
@@ -142,21 +149,25 @@ class ExtentManager with ChangeNotifier {
 
   void addItem(int index) {
     _extentList.insertAt(index, delegate.estimateExtentForItem);
+    print("[ExtentManager.addItem] index: $index. calling onMarkNeedsLayout");
     delegate.onMarkNeedsLayout();
   }
 
   void removeItem(int index) {
     _extentList.removeAt(index);
+    print("[ExtentManager.removeItem] index: $index. calling onMarkNeedsLayout");
     delegate.onMarkNeedsLayout();
   }
 
   void invalidateExtent(int index) {
     _extentList.markDirty(index);
+    print("[ExtentManager.invalidateExtent] index: $index. calling onMarkNeedsLayout");
     delegate.onMarkNeedsLayout();
   }
 
   void invalidateAllExtents() {
     _extentList.markAllDirty();
+    print("[ExtentManager.invalidateAllExtents] calling onMarkNeedsLayout");
     delegate.onMarkNeedsLayout();
   }
 
