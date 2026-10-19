@@ -1177,6 +1177,18 @@ class RenderSuperSliverList extends RenderSliverMultiBoxAdaptor
     // Start offset with applied scroll correction.
     var correctedStartOffset = startOffset + scrollCorrection;
 
+    // Whether the item before the first child is in the cache area. An item
+    // with a stored extent of zero that ends exactly at the start offset is
+    // included: it is never scrolled into view, so if it were not built here,
+    // a later change to its content would never be laid out.
+    bool needsLeadingChild(double firstChildOffset) {
+      final index = _indexOf(firstChild!);
+      if (index == 0) return false;
+      return firstChildOffset > correctedStartOffset ||
+          (firstChildOffset == correctedStartOffset &&
+              _extentManager.getExtent(index - 1) == 0);
+    }
+
     // Adding preceding children.
     if (SuperSliverListPerfFlags.batchLeadingChildShift) {
       // Deferred-shift variant: instead of shifting every subsequent child
@@ -1187,11 +1199,11 @@ class RenderSuperSliverList extends RenderSliverMultiBoxAdaptor
       // by [pendingShift] while the loop runs, which is compensated for in
       // the loop condition.
       double pendingShift = 0;
-      while ((_indexOf(firstChild!) > 0 &&
-              childScrollOffset(firstChild!)! + pendingShift >
-                  correctedStartOffset) ||
-          (_childScrollOffsetEstimation != null &&
-              _indexOf(firstChild!) > _childScrollOffsetEstimation!.index)) {
+      while (
+          needsLeadingChild(childScrollOffset(firstChild!)! + pendingShift) ||
+              (_childScrollOffsetEstimation != null &&
+                  _indexOf(firstChild!) >
+                      _childScrollOffsetEstimation!.index)) {
         final prevOffset = childScrollOffset(firstChild!)!;
         final previousExtent =
             _extentManager.getExtent(_indexOf(firstChild!) - 1);
@@ -1232,8 +1244,7 @@ class RenderSuperSliverList extends RenderSliverMultiBoxAdaptor
         _shiftLayoutOffsets(firstChild, pendingShift);
       }
     } else {
-      while ((_indexOf(firstChild!) > 0 &&
-              childScrollOffset(firstChild!)! > correctedStartOffset) ||
+      while (needsLeadingChild(childScrollOffset(firstChild!)!) ||
           (_childScrollOffsetEstimation != null &&
               _indexOf(firstChild!) > _childScrollOffsetEstimation!.index)) {
         final prevOffset = childScrollOffset(firstChild!)!;
