@@ -31,8 +31,15 @@ jobs:
           persist-credentials: false
       - uses: Telosnex/telosnex_ci_tools/actions/setup-flutter@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
       - uses: Telosnex/telosnex_ci_tools/actions/lint@cba77fc0d4330f1bef81193c53cd7dd976f0ebcf # v0.5.3
-      - run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed lib test example/lib example/data/lib
+      # flutter pub get resolves example/ too; the root analyze also reads
+      # example/data/.
+      - run: flutter pub get && (cd example/data && flutter pub get)
+      # Generated files (first line "// GENERATED ...") keep their generator's
+      # layout.
+      - run: |
+          git ls-files '*.dart' |
+            while read -r f; do head -1 "$f" | grep -qiE '^// *generated' || echo "$f"; done |
+            xargs dart format --output=none --set-exit-if-changed
       - run: flutter analyze --fatal-infos
       - run: flutter test -r expanded
       - run: flutter analyze --fatal-infos
