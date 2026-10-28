@@ -69,10 +69,7 @@ void main() {
   test("Win 15: clean range across appends", () async {
     final perf = PerfTester<_Scenario, double>(
       testName: "Win 15: structural clean-range preservation",
-      testCases: const [
-        _Scenario(20000, 1000),
-        _Scenario(100000, 200),
-      ],
+      testCases: const [_Scenario(20000, 1000), _Scenario(100000, 200)],
       implementation1: (s) => _run(s, preserve: false),
       implementation2: (s) => _run(s, preserve: true),
       impl1Name: "discard-range",

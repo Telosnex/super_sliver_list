@@ -51,7 +51,6 @@ Future<ScrollController> _pumpList(
       textDirection: TextDirection.ltr,
       child: SuperListView.builder(
         controller: controller,
-        // ignore: deprecated_member_use
         cacheExtent: s.cacheExtent,
         itemCount: s.itemCount,
         itemBuilder: (context, index) =>
@@ -84,14 +83,13 @@ Future<double> runForwardJumpScenario(
   final controller = await _pumpList(tester, s);
   var checksum = 0.0;
   for (var i = 1; i <= s.steps; i++) {
-    final target =
-        (i * s.step).clamp(0.0, controller.position.maxScrollExtent);
+    final target = (i * s.step).clamp(0.0, controller.position.maxScrollExtent);
     controller.jumpTo(target);
     await tester.pump();
     await tester.pump(); // settle delayed layout / corrections
     checksum += controller.position.pixels;
   }
-  return _teardown(tester, controller, checksum);
+  return await _teardown(tester, controller, checksum);
 }
 
 /// Scrolls forward in steps smaller than the cache area, so children are
@@ -113,7 +111,7 @@ Future<double> runForwardStepScenario(
     await tester.pump();
     checksum += controller.position.pixels;
   }
-  return _teardown(tester, controller, checksum);
+  return await _teardown(tester, controller, checksum);
 }
 
 /// Jumps to the bottom of the list and then scrolls upward in steps smaller
@@ -138,5 +136,5 @@ Future<double> runUpwardScrollScenario(
     await tester.pump(); // settle corrections from newly measured items
     checksum += controller.position.pixels;
   }
-  return _teardown(tester, controller, checksum);
+  return await _teardown(tester, controller, checksum);
 }

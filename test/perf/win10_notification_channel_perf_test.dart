@@ -22,8 +22,9 @@ import "package:super_sliver_list/super_sliver_list.dart";
 import "perf_tester.dart";
 
 void main() {
-  testWidgets("Win 10: legacy vs extents-only notification channel",
-      (tester) async {
+  testWidgets("Win 10: legacy vs extents-only notification channel", (
+    tester,
+  ) async {
     const itemCount = 600;
 
     Future<double> scenario(bool extentsChannel) async {
@@ -54,7 +55,6 @@ void main() {
             child: SuperListView.builder(
               controller: scrollController,
               listController: listController,
-              // ignore: deprecated_member_use
               cacheExtent: 3000,
               itemCount: itemCount,
               itemBuilder: (context, index) =>
@@ -92,8 +92,10 @@ void main() {
         channel.removeListener(minimapListener);
         checksum += listController.totalExtent;
         // ignore: avoid_print
-        print("      [${extentsChannel ? "extents-channel" : "legacy"}] "
-            "listener invoked $callbacks times during 120 scroll frames");
+        print(
+          "      [${extentsChannel ? "extents-channel" : "legacy"}] "
+          "listener invoked $callbacks times during 120 scroll frames",
+        );
         await tester.pumpWidget(const SizedBox());
         return checksum;
       } finally {

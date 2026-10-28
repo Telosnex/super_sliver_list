@@ -4,8 +4,9 @@ import "package:super_sliver_list/super_sliver_list.dart";
 
 void main() {
   for (final batch in [true, false]) {
-    testWidgets("zero-extent leading items are built (batch shift: $batch)",
-        (tester) async {
+    testWidgets("zero-extent leading items are built (batch shift: $batch)", (
+      tester,
+    ) async {
       final previous = SuperSliverListPerfFlags.batchLeadingChildShift;
       SuperSliverListPerfFlags.batchLeadingChildShift = batch;
       addTearDown(
@@ -15,21 +16,21 @@ void main() {
       addTearDown(scroll.dispose);
       final extents = ValueNotifier<List<double>>([0, 0, 100, 0, 100]);
       addTearDown(extents.dispose);
-      await tester.pumpWidget(Directionality(
-        textDirection: TextDirection.ltr,
-        child: ValueListenableBuilder(
-          valueListenable: extents,
-          builder: (context, value, _) => SuperListView.builder(
-            controller: scroll,
-            itemCount: value.length,
-            extentEstimation: (index, _) => index == null ? 0 : value[index],
-            itemBuilder: (_, index) => SizedBox(
-              key: ValueKey(index),
-              height: value[index],
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: ValueListenableBuilder(
+            valueListenable: extents,
+            builder: (context, value, _) => SuperListView.builder(
+              controller: scroll,
+              itemCount: value.length,
+              extentEstimation: (index, _) => index == null ? 0 : value[index],
+              itemBuilder: (_, index) =>
+                  SizedBox(key: ValueKey(index), height: value[index]),
             ),
           ),
         ),
-      ));
+      );
       await tester.pumpAndSettle();
       // Every item, including the zero-extent ones at the leading edge, is in
       // the tree. Otherwise a later change to their content is never laid out.
@@ -53,28 +54,31 @@ void main() {
     });
   }
 
-  testWidgets("zero-extent leading item is rebuilt after it was collected",
-      (tester) async {
+  testWidgets("zero-extent leading item is rebuilt after it was collected", (
+    tester,
+  ) async {
     final scroll = ScrollController();
     addTearDown(scroll.dispose);
     final first = ValueNotifier<double>(0);
     addTearDown(first.dispose);
-    await tester.pumpWidget(Directionality(
-      textDirection: TextDirection.ltr,
-      child: ValueListenableBuilder(
-        valueListenable: first,
-        builder: (context, value, _) => SuperListView.builder(
-          controller: scroll,
-          itemCount: 100,
-          extentEstimation: (index, _) =>
-              index == null ? 0 : (index == 0 ? value : 100),
-          itemBuilder: (_, index) => SizedBox(
-            key: ValueKey(index),
-            height: index == 0 ? value : 100,
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: ValueListenableBuilder(
+          valueListenable: first,
+          builder: (context, value, _) => SuperListView.builder(
+            controller: scroll,
+            itemCount: 100,
+            extentEstimation: (index, _) =>
+                index == null ? 0 : (index == 0 ? value : 100),
+            itemBuilder: (_, index) => SizedBox(
+              key: ValueKey(index),
+              height: index == 0 ? value : 100,
+            ),
           ),
         ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
     // Far enough that item 0 leaves the cache area and is collected.
     scroll.jumpTo(3000);

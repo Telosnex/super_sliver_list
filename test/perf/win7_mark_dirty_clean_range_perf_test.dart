@@ -70,10 +70,7 @@ void main() {
   test("Win 7: markDirty range discard vs preservation", () async {
     final perf = PerfTester<_Scenario, double>(
       testName: "Win 7: clean range across invalidations",
-      testCases: const [
-        _Scenario(20000, 1000),
-        _Scenario(100000, 300),
-      ],
+      testCases: const [_Scenario(20000, 1000), _Scenario(100000, 300)],
       implementation1: (s) => _run(s, preserve: false),
       implementation2: (s) => _run(s, preserve: true),
       impl1Name: "discard-range",
