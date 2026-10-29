@@ -1,5 +1,6 @@
 import "dart:math" as math;
 
+import "package:flutter/foundation.dart";
 import "package:logging/logging.dart";
 
 import "sliver_list_configuration.dart";
@@ -99,7 +100,9 @@ class FuzzConfigurationProvider extends TestConfigurationProvider {
   @override
   Iterable<TestConfiguration> nextConfiguration() sync* {
     const isCustomerTest = bool.fromEnvironment("flutter_customer_test");
-    const iterations = isCustomerTest
+    // Browsers run the fuzzer a few times per configuration: 100 take about
+    // three minutes per test under dart2js. The VM runs them all.
+    const iterations = isCustomerTest || kIsWeb
         ? _customerTestMaxIterations
         : _maxIterations;
     for (final (fcIndex, fc) in _testConfigurations.indexed) {
