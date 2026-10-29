@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 1: O(1) membership check in RenderSuperSliverList.childScrollOffset.
 //
 // Baseline scans the live child list linearly on every childScrollOffset

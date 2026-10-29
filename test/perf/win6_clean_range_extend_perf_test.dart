@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 6: Incremental clean-range maintenance in ExtentList.setExtent.
 //
 // Baseline resets the tracked clean range to a single index on every

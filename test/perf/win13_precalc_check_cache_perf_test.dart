@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 13: _shouldPrecalculateExtents work when the result is cached.
 //
 // Baseline performs the viewport ancestor walk and allocates an

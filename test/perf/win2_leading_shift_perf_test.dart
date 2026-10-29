@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 2: Batched layout-offset shifting when inserting leading children.
 //
 // Baseline shifts the layout offset of *all* subsequent children once per

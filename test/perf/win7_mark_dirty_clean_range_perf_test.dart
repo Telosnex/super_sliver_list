@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 7: markDirty preserves (part of) the tracked clean range.
 //
 // Baseline discards the entire tracked clean range when any single item is

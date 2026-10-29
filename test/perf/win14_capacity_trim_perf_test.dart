@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 14: Capacity-trim hysteresis in ResizableFloat64List.
 //
 // Baseline trims backing-store capacity as soon as capacity/2 >= length,

@@ -59,7 +59,7 @@ jobs:
       # the VM-only files (@TestOn('vm'): dart:io, tool/) are left out. grep -L
       # exits 1 when no file has the annotation.
       - run: |
-          files=$(git ls-files 'test/**_test.dart' | xargs grep -L "@TestOn('vm')" || true)
+          files=$(git ls-files 'test/**_test.dart' | xargs grep -LE "@TestOn\\(['\"]vm['\"]\\)" || true)
           flutter test --platform chrome $WASM -r expanded $files
 
   web-linux-chrome-dart2wasm:

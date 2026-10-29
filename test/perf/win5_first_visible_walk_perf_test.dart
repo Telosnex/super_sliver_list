@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 5: Lazy `_firstWholeVisibleChild` lookup.
 //
 // Baseline walks all leading cache-area children on *every* layout to find

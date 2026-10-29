@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 11: Stopwatch/logging guard in the invisible-sliver layout path.
 //
 // Baseline creates and starts a Stopwatch on every layout of every

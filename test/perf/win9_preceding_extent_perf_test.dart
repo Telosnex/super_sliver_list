@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 9: Fast getActualPrecedingScrollExtent.
 //
 // Baseline walks this sliver's ancestor chain once per preceding viewport

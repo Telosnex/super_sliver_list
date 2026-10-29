@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 10: Extents-only notification channel.
 //
 // Listening to [ListController] directly fires on every layout where

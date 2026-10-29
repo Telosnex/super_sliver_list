@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 12: Single-pass kept-alive children layout.
 //
 // Baseline runs two full visitChildren passes (over live + kept-alive

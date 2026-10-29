@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 3: Incremental Fenwick tree maintenance.
 //
 // Baseline discards the Fenwick tree whenever the item count changes, forcing

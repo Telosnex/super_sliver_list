@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 15: Clean range preserved across insertAt/removeAt.
 //
 // Baseline discards the tracked clean range on every structural change, even

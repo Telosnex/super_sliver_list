@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 4: Batched build scope / layout callback for extent precalculation.
 //
 // Baseline pays one invokeLayoutCallback + one BuildOwner.buildScope per

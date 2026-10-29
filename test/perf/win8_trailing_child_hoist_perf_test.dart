@@ -1,3 +1,7 @@
+// A benchmark: minutes per case under dart2js, so the VM only.
+@TestOn("vm")
+library;
+
 // Win 8: Hoisted childScrollOffset/paintExtentOf in addTrailingChild.
 //
 // Baseline computes `childScrollOffset(lastChild) + paintExtentOf(lastChild)`
