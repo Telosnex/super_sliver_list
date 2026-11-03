@@ -1,5 +1,6 @@
 // A benchmark: minutes per case under dart2js, so the VM only.
 @TestOn("vm")
+@Tags(["perf"])
 library;
 
 // Win 7: markDirty preserves (part of) the tracked clean range.
@@ -17,10 +18,9 @@ library;
 // Run with:
 //   flutter test test/perf/win7_mark_dirty_clean_range_perf_test.dart
 import "package:flutter_test/flutter_test.dart";
+import "package:perf_tester/perf_tester.dart";
 import "package:super_sliver_list/src/extent_list.dart";
 import "package:super_sliver_list/super_sliver_list.dart";
-
-import "perf_tester.dart";
 
 double _extentFor(int index) => 40.0 + (index * 13) % 80;
 

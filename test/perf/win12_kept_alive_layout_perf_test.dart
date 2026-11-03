@@ -1,5 +1,6 @@
 // A benchmark: minutes per case under dart2js, so the VM only.
 @TestOn("vm")
+@Tags(["perf"])
 library;
 
 // Win 12: Single-pass kept-alive children layout.
@@ -18,9 +19,8 @@ library;
 //   flutter test test/perf/win12_kept_alive_layout_perf_test.dart
 import "package:flutter/widgets.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:perf_tester/perf_tester.dart";
 import "package:super_sliver_list/super_sliver_list.dart";
-
-import "perf_tester.dart";
 
 void main() {
   testWidgets("Win 12: two-pass vs single-pass kept-alive layout", (

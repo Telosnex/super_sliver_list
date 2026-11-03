@@ -1,5 +1,6 @@
 // A benchmark: minutes per case under dart2js, so the VM only.
 @TestOn("vm")
+@Tags(["perf"])
 library;
 
 // Win 8: Hoisted childScrollOffset/paintExtentOf in addTrailingChild.
@@ -12,9 +13,9 @@ library;
 // Run with:
 //   flutter test test/perf/win8_trailing_child_hoist_perf_test.dart
 import "package:flutter_test/flutter_test.dart";
+import "package:perf_tester/perf_tester.dart";
 import "package:super_sliver_list/super_sliver_list.dart";
 
-import "perf_tester.dart";
 import "widget_scenarios.dart";
 
 void main() {

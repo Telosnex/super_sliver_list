@@ -1,5 +1,6 @@
 // A benchmark: minutes per case under dart2js, so the VM only.
 @TestOn("vm")
+@Tags(["perf"])
 library;
 
 // Win 4: Batched build scope / layout callback for extent precalculation.
@@ -18,9 +19,8 @@ library;
 //   flutter test test/perf/win4_precalc_batch_measure_perf_test.dart
 import "package:flutter/widgets.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:perf_tester/perf_tester.dart";
 import "package:super_sliver_list/super_sliver_list.dart";
-
-import "perf_tester.dart";
 
 class _AlwaysPrecalculatePolicy extends ExtentPrecalculationPolicy {
   @override

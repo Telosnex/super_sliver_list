@@ -1,5 +1,6 @@
 // A benchmark: minutes per case under dart2js, so the VM only.
 @TestOn("vm")
+@Tags(["perf"])
 library;
 
 // Win 11: Stopwatch/logging guard in the invisible-sliver layout path.
@@ -17,9 +18,8 @@ library;
 //   flutter test test/perf/win11_invisible_logging_guard_perf_test.dart
 import "package:flutter/widgets.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:perf_tester/perf_tester.dart";
 import "package:super_sliver_list/super_sliver_list.dart";
-
-import "perf_tester.dart";
 
 void main() {
   testWidgets("Win 11: unconditional vs guarded logging stopwatch", (

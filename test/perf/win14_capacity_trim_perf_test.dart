@@ -1,5 +1,6 @@
 // A benchmark: minutes per case under dart2js, so the VM only.
 @TestOn("vm")
+@Tags(["perf"])
 library;
 
 // Win 14: Capacity-trim hysteresis in ResizableFloat64List.
@@ -17,10 +18,9 @@ library;
 // Run with:
 //   flutter test test/perf/win14_capacity_trim_perf_test.dart
 import "package:flutter_test/flutter_test.dart";
+import "package:perf_tester/perf_tester.dart";
 import "package:super_sliver_list/src/extent_list.dart";
 import "package:super_sliver_list/super_sliver_list.dart";
-
-import "perf_tester.dart";
 
 // One above a power of two, so removing a single item hits the trim
 // condition and re-adding it forces a re-grow.
